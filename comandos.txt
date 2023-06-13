@@ -1,0 +1,9 @@
+--activar el entorno virtual
+= .venv\Scripts\activate
+------------------------------------------------------------------
+--una vez que el entorno virtual este activo
+= pip install Flask
+= pip install openai
+------------------------------------------------------------------
+--levantar la aplicacion
+= flask --app backend run
