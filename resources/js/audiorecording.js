@@ -19,12 +19,13 @@ let startRecording = () => {
 
 let stopRecording = () => {
     let mimeType = mediaRecorder.mimeType;
+    console.log('Tipo MIME del audio capturado:', mimeType);
     mediaRecorder.stop();
 
     mediaRecorder.onstop = (ev) => {
         let audioData = new Blob(dataArray, { 'type': mimeType });
         let audioSrc = window.URL.createObjectURL(audioData);
-
+        
         dataArray = [];
 
         audioPlay.src = audioSrc;
@@ -35,10 +36,13 @@ let stopRecording = () => {
         reader.readAsDataURL(audioData);
         reader.onloadend = async () => {
             let base64audio = reader.result.split('base64,')[1];
+            console.log(base64audio);
+            
             let result = await axios.post('/transcribe', {
                 data: base64audio
             });
-            textTranscription.innerHTML = result.data.text;
+            console.log(result)
+            textTranscription.innerHTML = result;
         }
     };
 
