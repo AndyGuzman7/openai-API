@@ -5,7 +5,7 @@ let dataArray = [];
 
 let startRecording = () => {
     navigator.mediaDevices.getUserMedia({ audio: true }).then((mediaStreamObject) => {
-        mediaRecorder = new MediaRecorder(mediaStreamObject);
+        mediaRecorder = new MediaRecorder(mediaStreamObject, {mimeType: "audio/webm"});
         mediaRecorder.start();
 
         mediaRecorder.ondataavailable = (ev) => {
@@ -19,13 +19,12 @@ let startRecording = () => {
 
 let stopRecording = () => {
     let mimeType = mediaRecorder.mimeType;
-    console.log('Tipo MIME del audio capturado:', mimeType);
     mediaRecorder.stop();
 
     mediaRecorder.onstop = (ev) => {
         let audioData = new Blob(dataArray, { 'type': mimeType });
         let audioSrc = window.URL.createObjectURL(audioData);
-        
+
         dataArray = [];
 
         audioPlay.src = audioSrc;
@@ -36,13 +35,11 @@ let stopRecording = () => {
         reader.readAsDataURL(audioData);
         reader.onloadend = async () => {
             let base64audio = reader.result.split('base64,')[1];
-            console.log(base64audio);
-            
+            console.log(reader.result);
             let result = await axios.post('/transcribe', {
                 data: base64audio
             });
-            console.log(result)
-            textTranscription.innerHTML = result;
+            textTranscription.innerHTML = result.data.text;
         }
     };
 

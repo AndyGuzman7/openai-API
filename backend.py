@@ -27,22 +27,17 @@ def resources(path):
 @app.route('/transcribe', methods=['POST'])
 def post_audio_file():
     file = request.json['data']
-    
-    # Decodificar el archivo Base64
+    print(file)
+ 
     decoded_bytes = base64.b64decode(file)
 
-    # Escribir los bytes decodificados en un archivo WAV
-    wav_file = wave.open('music.ogg', 'wb') 
-    wav_file.setnchannels(2)  # Número de canales (estéreo)
-    wav_file.setsampwidth(2)  # Tamaño de muestra en bytes (16 bits)
-    wav_file.setframerate(44100)  # Frecuencia de muestreo en Hz
-    wav_file.writeframes(decoded_bytes)
-    wav_file.close()
+    #convertBase64(file)
+    with open('music.webm', 'wb') as wav_file:
+        wav_file.write(decoded_bytes)
 
-    # Reabrir el archivo WAV para realizar la transcripción
-    audio_file = open('file2.ogg', "rb")
-    # Realiza la transcripción utilizando el archivo WAV temporal
-    transcript = openai.Audio.transcribe('whisper-1', audio_file)
+    audio_file = open('music.webm', "rb")
+  
+    transcript = openai.Audio.transcribe('whisper-1',audio_file)
     
     return transcript
 
