@@ -2,17 +2,13 @@ from flask import Flask
 from flask import request
 from flask import render_template, send_from_directory
 from uuid import uuid4
-import wave
 import base64
-import json
 import openai
-import os
-import pydub
 import pygame
 app = Flask(__name__)
 
-OPENAI_KEY = "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"
-OPENAI_API_URL = "https://api.openai.com/v1"
+#OPENAI_KEY = "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"
+#OPENAI_API_URL = "https://api.openai.com/v1"
 openai.api_key = OPENAI_KEY
 openai.api_base = OPENAI_API_URL
 
