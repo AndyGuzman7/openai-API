@@ -5,7 +5,7 @@ import base64
 import openai
 app = Flask(__name__)
 
-OPENAI_KEY = "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"
+OPENAI_KEY = "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"
 OPENAI_API_URL = "https://api.openai.com/v1"
 openai.api_key = OPENAI_KEY
 openai.api_base = OPENAI_API_URL
