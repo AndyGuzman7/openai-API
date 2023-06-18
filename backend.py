@@ -21,16 +21,12 @@ def resources(path):
 @app.route('/transcribe', methods=['POST'])
 def post_audio_file():
     file = request.json['data']
-    print(file)
- 
-    decoded_bytes = base64.b64decode(file)
 
-    #convertBase64(file)
+    decoded_bytes = base64.b64decode(file)
     with open('music.webm', 'wb') as wav_file:
         wav_file.write(decoded_bytes)
-
     audio_file = open('music.webm', "rb")
-  
+
     transcript = openai.Audio.transcribe('whisper-1',audio_file)
     
     return transcript
