@@ -1,14 +1,12 @@
 from flask import Flask
 from flask import request
 from flask import render_template, send_from_directory
-from uuid import uuid4
 import base64
 import openai
-import pygame
 app = Flask(__name__)
 
-#OPENAI_KEY = "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"
-#OPENAI_API_URL = "https://api.openai.com/v1"
+OPENAI_KEY = "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"
+OPENAI_API_URL = "https://api.openai.com/v1"
 openai.api_key = OPENAI_KEY
 openai.api_base = OPENAI_API_URL
 
@@ -37,15 +35,7 @@ def post_audio_file():
     
     return transcript
 
-def convertBase64(base64_encoded_sound_data):
-    
 
-    pygame.mixer.init(frequency=8000, size=8, channels=1, allowedchanges=0)
-    sound_data = base64.b64decode(base64_encoded_sound_data)
-    sound = pygame.mixer.Sound(sound_data)
-    ch = sound.play(loops=50)
-    while ch.get_busy():
-        pygame.time.wait(100)
 
 if __name__ == '__main__':
     app.run('0.0.0.0', 8000)
