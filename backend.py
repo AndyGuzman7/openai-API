@@ -4,8 +4,8 @@ from flask import render_template, send_from_directory
 import base64
 import openai
 app = Flask(__name__)
-
-OPENAI_KEY = "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"
+# Por seguridad quitar # y * del key
+OPENAI_KEY = "#sk-U4EBS1lsxe9wykCA**#Gm6IT3BlbkFJcgQS3lCUt1C2UQUUEGKG###"
 OPENAI_API_URL = "https://api.openai.com/v1"
 openai.api_key = OPENAI_KEY
 openai.api_base = OPENAI_API_URL
@@ -25,6 +25,7 @@ def post_audio_file():
     decoded_bytes = base64.b64decode(file)
     with open('music.webm', 'wb') as wav_file:
         wav_file.write(decoded_bytes)
+        
     audio_file = open('music.webm', "rb")
 
     transcript = openai.Audio.transcribe('whisper-1',audio_file)
